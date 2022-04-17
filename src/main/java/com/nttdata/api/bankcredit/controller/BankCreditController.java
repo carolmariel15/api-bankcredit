@@ -75,15 +75,15 @@ public class BankCreditController {
 	@PutMapping("/{id}")
 	public Mono<ResponseEntity<BankCredit>> editBankCredit(@RequestBody BankCredit bankCredit, @PathVariable String id) {
 		return bankCreditService.findById(id).flatMap(bc -> {
-			bc.setTransaction(bankCredit.getTransaction());
-			bc.setTypeCredit(bankCredit.getTypeCredit());
+			bc.setAmount(bankCredit.getAmount());
+			bc.setFee(bankCredit.getFee());
 			return bankCreditService.save(bc);
 		}).map(bc -> ResponseEntity.created(URI.create("/api/bankcredit/".concat(bc.getId())))
 				.contentType(MediaType.APPLICATION_JSON).body(bc)).defaultIfEmpty(ResponseEntity.notFound().build());
 	}
 
 	@DeleteMapping("/{id}")
-	public Mono<ResponseEntity<Void>> deleteBankCredite(@PathVariable String id) {
+	public Mono<ResponseEntity<Void>> deleteBankCredit(@PathVariable String id) {
 		return bankCreditService.findById(id).flatMap(bc -> {
 			return bankCreditService.delete(bc).then(Mono.just(new ResponseEntity<Void>(HttpStatus.NO_CONTENT)));
 
