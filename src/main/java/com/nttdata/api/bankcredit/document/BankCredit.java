@@ -13,7 +13,7 @@ import lombok.Setter;
 
 @Getter
 @Setter
-@Document(collection = "bank_credit")
+@Document(collection = "bankcredit")
 public class BankCredit {
 	
 	@Id
