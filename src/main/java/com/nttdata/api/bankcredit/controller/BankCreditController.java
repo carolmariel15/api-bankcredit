@@ -30,7 +30,7 @@ import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
 @RestController
-@RequestMapping("/api/bankcredit")
+@RequestMapping("/bankcredit")
 public class BankCreditController {
 	
 	private static final Logger LOGGER = LogManager.getLogger(BankCreditController.class);
@@ -75,7 +75,7 @@ public class BankCreditController {
 				response.put("message", "Successfully saved.");
 				response.put("timestamp", new Date());
 
-				return ResponseEntity.created(URI.create("/api/bankcredit/".concat(bc.getId())))
+				return ResponseEntity.created(URI.create("/bankcredit/".concat(bc.getId())))
 						.contentType(MediaType.APPLICATION_JSON).body(response);
 			});
 		}).onErrorResume(t -> {
@@ -100,7 +100,7 @@ public class BankCreditController {
 			bc.setAmount(bankCredit.getAmount());
 			bc.setFee(bankCredit.getFee());
 			return bankCreditService.save(bc);
-		}).map(bc -> ResponseEntity.created(URI.create("/api/bankcredit/".concat(bc.getId())))
+		}).map(bc -> ResponseEntity.created(URI.create("/bankcredit/".concat(bc.getId())))
 				.contentType(MediaType.APPLICATION_JSON).body(bc)).defaultIfEmpty(ResponseEntity.notFound().build());
 	}
 
